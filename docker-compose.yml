@@ -13,3 +13,9 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  kafka-consumer:
+    build: ./Consumer
+    depends_on: 
+      - zookeeper
+      - kafka
+    entrypoint: ["python3", "KafkaConsumer.py", "192.168.1.12:32780,192.168.1.12:32779"]
