@@ -13,9 +13,25 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  kafka-consumer:
+  database:
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Opening for external services
+    volumes:
+      - /mnt:/data/db
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root # Always use environment variable and never this!
+      - MONGO_INITDB_ROOT_PASSWORD=password 
+  stream-processor:
     build: ./Consumer
     depends_on: 
       - zookeeper
       - kafka
-    entrypoint: ["python3", "KafkaConsumer.py", "192.168.1.12:32780,192.168.1.12:32779"]
+    entrypoint: ["python3", "KafkaConsumer.py", "192.168.1.12:32784,192.168.1.12:32783", "kafka-stream-consumer-group"]
+  database-processor:
+      build: ./Consumer
+      depends_on: 
+        - zookeeper
+        - kafka
+        - database
+      entrypoint: ["python3", "KafkaConsumer.py", "192.168.1.12:32784,192.168.1.12:32783", "kafka-database-consumer-group"]
