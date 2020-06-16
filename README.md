@@ -15,8 +15,14 @@ Next start the Kafka brokers by:
 ```bash
 $ docker-compose up --scale kafka=NUMBER_OF_BROKERS
 ```
+#### 2. Start Mongo Databse
+To start MongoDB, just run the command:
 
-#### 2. Start the consumer:
+```bash
+$ docker-compose up -d database
+```
+
+#### 3. Start the database-consumer:
 To start the Kafka consumer service, run the following command while Kafka is running:
 
 ```bash
