@@ -29,7 +29,7 @@ services:
       - kafka
     entrypoint: ["python3", "KafkaConsumer.py", "192.168.1.12:32784,192.168.1.12:32783", "kafka-stream-consumer-group"]
   database-processor:
-      build: ./Consumer
+      build: ./DatabaseIngestor
       depends_on: 
         - zookeeper
         - kafka
