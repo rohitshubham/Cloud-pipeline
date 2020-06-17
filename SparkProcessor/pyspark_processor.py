@@ -35,20 +35,23 @@ def process_kafka_pending_messages(message):
         node_avg_count = {}
         for message in kafka_messages:
             data.append(json.loads(message))
-        
-        for value in data:
-            node_name = value["node_name"]
-            if node_name not in node_avg_data:
-                node_avg_data[node_name] = 0
-                node_avg_count[node_name] = 0
-            node_avg_count[node_name] = node_avg_count[node_name] + 1
-            node_avg_data[node_name] = (node_avg_data[node_name] + value["temperature"])/node_avg_count            
+
+        for item in data:
+            for value in item:
+                node_name = value["node_name"]
+                if node_name not in node_avg_data:
+                    node_avg_data[node_name] = 0
+                    node_avg_count[node_name] = 0
+                
+                
+                node_avg_count[node_name] = node_avg_count[node_name] + 1
+                node_avg_data[node_name] = node_avg_data[node_name] + value["temperature"]           
 
         rootLogger.info("========= Completed Processing of RDD! =========")
         rootLogger.info("========= Results =========")
         # printing the valresults:
         for key in node_avg_data:
-            rootLogger.info(f"Node Name: {key}, Average Temp: {node_avg_data[key]}")
+            rootLogger.info(f"Node Name: {key}, Average Temp: {node_avg_data[key]/node_avg_count[key]} for window of {WINDOW_DURATION} seconds")
         rootLogger.info("========= Finish =========")
     except Exception as e:
         rootLogger.error(f"Encountred exception while processing: {e}")

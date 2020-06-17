@@ -27,7 +27,8 @@ services:
     depends_on: 
       - zookeeper
       - kafka
-    entrypoint: ["python3", "processor.py", "192.168.1.12:32786,192.168.1.12:32787", "kafka-stream-consumer-group"]
+    entrypoint: ["bash", "start_spark.sh"]
+    #entrypoint: ["spark-submit", "--master", "spark://spark:7077", "--packages", "org.apache.spark:spark-streaming-kafka-0-8-assembly_2.11:2.4.6", "pyspark_processor.py"]
   database-processor:
     build: ./DatabaseIngestor
     depends_on: 
