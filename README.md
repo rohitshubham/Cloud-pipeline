@@ -103,4 +103,8 @@ $ python3 client-report.py "192.168.1.12:32812,192.168.1.12:32814" report
 ---
 
 ### Monitoring the application
+The recommended application for monitoring is [netdata](https://github.com/netdata/netdata).
+
+![architecture](images/monitoring.png)
+* Figure 2: Sample application monitoring (Notice the containers at the bottom right)
 ---
