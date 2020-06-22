@@ -1,14 +1,32 @@
 # Cloud-pipeline
 
----
 [![Build Status](https://travis-ci.com/rohitshubham/Cloud-pipeline.svg?branch=master)](https://travis-ci.com/rohitshubham/Cloud-pipeline)
 
 ---
 
 ### About the tool
+This tool simulates a simple cloud system compoenent of a big data processing architectecture. The repository includes basic code and tools required for readily setup a cloud componenet of a big data pipeline to enable developers and researchers perform additional testing of the code. This project works syncronously with the [edge-sim](https://github.com/rohitshubham/edge_simulator) project to quickly create a three tiered architecture.
 
 ---
 ### Different components
+The overall workflow/architecture can be seen in Figure 1.
+
+The different components available are:
+
+* __zookeeper__ : Service discovery container required for apache kafka
+* __kafka__: Message broker with scalability (See how to scale up/down the service below)
+* __database__: MongoDB database for stream data ingestion
+* __stream-processor__: Provides streaming analytics by consuming kafka messages for a fixed window interval
+* __database-processor__: Provides database ingestion into the mongodb database
+* __spark__: The master/controller instance of Apache Spark Node
+* __spark-worker__: Worker nodes that connect the _spark_ service (See how to scale up/down the service below).
+* __mongo-express__: Tool for connecting to _database_ service 
+
+In addition, we also have Kafka message consumer code in `/Util` directory.
+
+
+![architecture](images/Cloud_sim_architecture.png)
+* Figure 1: Workflow and architecture of cloud sim
 
 ---
 ### Running the Kafka
@@ -68,6 +86,20 @@ $ docker-compose up --scale kafka=2 database-processor
 ```
 
 Note: The `database-processor` and `stream-processor` applications both belong to separate consumer groups in Kafka. As such, running both of them will provide simultaneous stream ingestion and processing capability.
+
+#### 7. Kafka Message Consumer
+
+The python script to consume any message on any topic in present in `/Utils` folder. Launch it as:
+
+```bash
+$ python3 client-report.py "kafka_broker" "topic_to_connect"
+```
+for example:
+
+```bash
+$ python3 client-report.py "192.168.1.12:32812,192.168.1.12:32814" report
+```
+
 ---
 
 ### Monitoring the application
