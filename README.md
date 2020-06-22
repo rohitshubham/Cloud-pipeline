@@ -1,4 +1,9 @@
-# Cloud-pipeline- Work in progress  :)
+# Cloud-pipeline
+
+---
+[![Build Status](https://travis-ci.com/rohitshubham/Cloud-pipeline.svg?branch=master)](https://travis-ci.com/rohitshubham/Cloud-pipeline)
+
+---
 
 ### Running the Kafka
 To run the cloud pipeline service, we need to perform the follwing:
