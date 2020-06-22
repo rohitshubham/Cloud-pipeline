@@ -37,7 +37,7 @@ class MongoIngestor:
 class KafkaMessageConsumer:
     def __init__(self, servers, group_name):
         super().__init__()
-        self.consumer = KafkaConsumer(bootstrap_servers = servers, group_id = group_name, value_deserializer=msgpack.unpackb)
+        self.consumer = KafkaConsumer(bootstrap_servers = servers, group_id = group_name)
         self.consumer.subscribe(pattern="sensors.temperature.*")
         rootLogger.info("Connected to Kafka broker")
 
@@ -56,7 +56,7 @@ class KafkaMessageConsumer:
             data= {
                 "metadata_id": result.inserted_id,
                 "topic" : message.topic,
-                "message" : message.value
+                "message" : json.loads(message.value)
                 }
             db_client.insert_data(data)
             rootLogger.info(f"Saved data from edge device")

@@ -28,14 +28,13 @@ services:
       - zookeeper
       - kafka
     entrypoint: ["bash", "start_spark.sh"]
-    #entrypoint: ["spark-submit", "--master", "spark://spark:7077", "--packages", "org.apache.spark:spark-streaming-kafka-0-8-assembly_2.11:2.4.6", "pyspark_processor.py"]
   database-processor:
     build: ./DatabaseIngestor
     depends_on: 
       - zookeeper
       - kafka
       - database
-    entrypoint: ["python3", "MongoIngestor.py", "192.168.1.12:32786,192.168.1.12:32787", "kafka-database-consumer-group"]
+    entrypoint: ["python3", "MongoIngestor.py", "192.168.1.12:32812,192.168.1.12:32814", "kafka-database-consumer-group-2"]
   spark:
     image: bitnami/spark:latest
     environment:
@@ -53,24 +52,12 @@ services:
       - SPARK_MASTER_URL=spark://spark:7077
       - SPARK_WORKER_MEMORY=1G
       - SPARK_WORKER_CORES=1
-  flink:
-    image: flink:latest
-    expose:
-      - "6123"
+  mongo-express:
+    image: mongo-express
     ports:
       - "8080:8081"
-    command: jobmanager
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=flink
-  flink-taskmanager:
-    image: flink:latest
-    expose:
-      - "6121"
-      - "6122"
-    depends_on:
-      - flink
-    command: taskmanager
-    links:
-      - "flink:flink"
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=flink
+    environment: 
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=database
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
