@@ -1,11 +1,9 @@
-# Cloud-pipeline
+# Cloud-pipeline Subsystem
 
 [![Build Status](https://travis-ci.com/rohitshubham/Cloud-pipeline.svg?branch=master)](https://travis-ci.com/rohitshubham/Cloud-pipeline)
 
----
-
 ### About the tool
-This tool simulates a simple cloud system compoenent of a big data processing architectecture. The repository includes basic code and tools required for readily setup a cloud componenet of a big data pipeline to enable developers and researchers perform additional testing of the code. This project works syncronously with the [edge-sim](https://github.com/rohitshubham/edge_simulator) project to quickly create a three tiered architecture.
+This tool creates  a simple cloud system component of a big data processing architectecture. The repository includes basic code and tools required for readily setup a cloud component of a big data pipeline to enable developers and researchers perform additional testing of the code. This project works syncronously with the [edge-sim](https://github.com/rohitshubham/edge_simulator) project to quickly create a three tiered architecture.
 
 ---
 ### Different components
@@ -26,7 +24,7 @@ In addition, we also have Kafka message consumer code in `/Util` directory.
 
 
 ![architecture](images/Cloud_sim_architecture.png)
-* Figure 1: Workflow and architecture of cloud sim
+* Figure 1: Workflow and architecture of cloud pipeline sub-systems
 
 ---
 ### Running the Kafka
