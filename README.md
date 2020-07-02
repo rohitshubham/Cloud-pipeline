@@ -1,7 +1,6 @@
 # Cloud-pipeline Subsystem
 
-[![Build Status](https://travis-ci.com/rohitshubham/Cloud-pipeline.svg?branch=master)](https://travis-ci.com/rohitshubham/Cloud-pipeline)
-
+[![Build Status](https://travis-ci.com/rohitshubham/Cloud-pipeline.svg?branch=master)](https://travis-ci.com/rohitshubham/Cloud-pipeline) [![database](https://badgen.net/badge/icon/database-processor?icon=docker&label)](https://hub.docker.com/r/rdsea/mongodb-database-ingestor "Checkout this on docker hub") [![database](https://badgen.net/badge/icon/stream-processor?icon=docker&label)](https://microbadger.com/images/rdsea/spark-job-submitter "Checkout this on docker hub")
 ### About the tool
 This tool creates  a simple cloud system component of a big data processing architectecture. The repository includes basic code and tools required for readily setup a cloud component of a big data pipeline to enable developers and researchers perform additional testing of the code. This project works syncronously with the [edge-sim](https://github.com/rohitshubham/edge_simulator) project to quickly create a three tiered architecture.
 
@@ -71,10 +70,11 @@ $ docker-compose up spark
 $ docker-compose scale spark-worker=2
 ```
 #### 5. Start the stream-processor application
+[![spark](https://images.microbadger.com/badges/version/rdsea/spark-job-submitter.svg)](https://microbadger.com/images/rdsea/spark-job-submitter "Checkout this on docker hub")
 To start the stream-processor application, use the following command:
 
 ```bash
-$ docker-compose up --scale kafka=2 stream-processor
+$ docker-compose up stream-processor
 ```
 #### 6. Start the database-ingestion application
 Start this using:
