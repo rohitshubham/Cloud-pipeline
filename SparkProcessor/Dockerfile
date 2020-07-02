@@ -23,4 +23,13 @@ RUN apt install -y vim
 
 WORKDIR /spark-processor
 
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:/opt/spark/bin:/opt/spark/sbin
+ENV PYSPARK_PYTHON=python3.6
+ENV PACKAGES=org.apache.spark:spark-streaming-kafka-0-8-assembly_2.11:2.4.6
+
+
 COPY . .
+
+ENTRYPOINT ["bash", "start_spark.sh"]
+CMD ["spark_processor.py"]

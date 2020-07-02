@@ -26,8 +26,11 @@ services:
     build: ./SparkProcessor
     depends_on: 
       - zookeeper
-      - kafka
-    entrypoint: ["bash", "start_spark.sh"]
+    environment:
+      - MASTER=spark://spark:7077
+    volumes:
+      - "./SparkProcessor/spark_processor.py:/spark-processor/test_script.py"
+    command: ["test_script.py"]
   database-processor:
     build: ./DatabaseIngestor
     depends_on: 
